@@ -1,8 +1,10 @@
 const express = require("express");
 const serverless = require("serverless-http");
+const bodyParser = require('body-parser')
 
 const app = express();
 const router = express.Router();
+app.use(bodyParser.urlencoded({extended: false}));
 
 const cors = require('cors');
 app.use(cors({
@@ -12,9 +14,21 @@ app.use(cors({
 
 router.get("/", (req, res) => {
   res.json({
-    hello: "hi!"
+    message: "Hi!"
   });
 });
+
+router.post("/contact", (req, res) => {
+
+  res.json({
+    name: req.body.fullName,
+    email: req.body.email,
+    phone: req.body.phone,
+    message: req.body.message
+  });
+});
+
+
 
 router.get('/steps',(req,res) => {
     res.json({steps:[
